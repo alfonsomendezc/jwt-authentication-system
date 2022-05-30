@@ -4,6 +4,9 @@ export const SignUp = () => {
   // const { store, actions } = useContext(Context);
 
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeat, setRepeat] = useState("");
 
   return (
     <section className="vh-100" style={{ backgroundColor: "#eee" }}>
@@ -41,6 +44,7 @@ export const SignUp = () => {
                             type="email"
                             id="form3Example3c"
                             className="form-control"
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                           <label className="form-label" for="form3Example3c">
                             Your Email
@@ -55,6 +59,7 @@ export const SignUp = () => {
                             type="password"
                             id="form3Example4c"
                             className="form-control"
+                            onChange={(e) => setPassword(e.target.value)}
                           />
                           <label className="form-label" for="form3Example4c">
                             Password
@@ -69,6 +74,7 @@ export const SignUp = () => {
                             type="password"
                             id="form3Example4cd"
                             className="form-control"
+                            onChange={(e) => setRepeat(e.target.value)}
                           />
                           <label className="form-label" for="form3Example4cd">
                             Repeat your password
