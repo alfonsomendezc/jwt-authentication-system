@@ -7,6 +7,12 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeat, setRepeat] = useState("");
+  const [check, setCheck] = useState(false);
+  const [errors, setErrors] = useState({
+    email: false,
+    password: false,
+    repeat: false,
+  });
 
   return (
     <section className="vh-100" style={{ backgroundColor: "#eee" }}>
@@ -55,30 +61,59 @@ export const SignUp = () => {
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
+                          <label className="form-label" for="form3Example4c">
+                            Password
+                          </label>
                           <input
                             type="password"
                             id="form3Example4c"
                             className="form-control"
                             onChange={(e) => setPassword(e.target.value)}
+                            onBlur={(e) => {
+                              let regex =
+                                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                              console.log(regex.test(password));
+                              if (regex.test(password)) {
+                                setErrors({ ...errors, password: false });
+                              } else {
+                                setErrors({ ...errors, password: true });
+                              }
+                            }}
                           />
-                          <label className="form-label" for="form3Example4c">
-                            Password
-                          </label>
+                          {errors.password && (
+                            <div className="text-warning">
+                              recuerda que debe tener al menos 8 caracteres 1
+                              letra minuscula 1 letra mayuscula 1 numero y un
+                              caracter especial perro
+                            </div>
+                          )}
                         </div>
                       </div>
 
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
+                          <label className="form-label" for="form3Example4cd">
+                            Repeat your password
+                          </label>
                           <input
                             type="password"
                             id="form3Example4cd"
                             className="form-control"
                             onChange={(e) => setRepeat(e.target.value)}
+                            onBlur={(e) => {
+                              if (repeat !== password) {
+                                setErrors({ ...errors, repeat: true });
+                              } else {
+                                setErrors({ ...errors, repeat: false });
+                              }
+                            }}
                           />
-                          <label className="form-label" for="form3Example4cd">
-                            Repeat your password
-                          </label>
+                          {errors.repeat && (
+                            <div className="text-warning">
+                              contraseña diferente perro de awa
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -86,8 +121,9 @@ export const SignUp = () => {
                         <input
                           className="form-check-input me-2"
                           type="checkbox"
-                          value=""
+                          value={check}
                           id="form2Example3c"
+                          onChange={(e) => setCheck(!check)}
                         />
                         <label className="form-check-label" for="form2Example3">
                           I agree all statements in{" "}
