@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export const SignUp = () => {
   // const { store, actions } = useContext(Context);
@@ -13,6 +14,14 @@ export const SignUp = () => {
     password: false,
     repeat: false,
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const history = useHistory();
+
+  const handleSubmit = () => {
+    history.push("/private");
+  };
 
   return (
     <section className="vh-100" style={{ backgroundColor: "#eee" }}>
@@ -37,7 +46,10 @@ export const SignUp = () => {
                             className="form-control"
                             onChange={(e) => setName(e.target.value)}
                           />
-                          <label className="form-label" for="form3Example1c">
+                          <label
+                            className="form-label"
+                            htmlFor="form3Example1c"
+                          >
                             Your Name
                           </label>
                         </div>
@@ -46,7 +58,10 @@ export const SignUp = () => {
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
-                          <label className="form-label" for="form3Example3c">
+                          <label
+                            className="form-label"
+                            htmlFor="form3Example3c"
+                          >
                             Your Email
                           </label>
                           <input
@@ -75,25 +90,40 @@ export const SignUp = () => {
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
-                          <label className="form-label" for="form3Example4c">
+                          <label
+                            className="form-label"
+                            htmlFor="form3Example4c"
+                          >
                             Password
                           </label>
-                          <input
-                            type="password"
-                            id="form3Example4c"
-                            className="form-control"
-                            onChange={(e) => setPassword(e.target.value)}
-                            onBlur={(e) => {
-                              let regex =
-                                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                              console.log(regex.test(password));
-                              if (regex.test(password)) {
-                                setErrors({ ...errors, password: false });
-                              } else {
-                                setErrors({ ...errors, password: true });
+                          <div className="d-flex">
+                            <input
+                              type={showPassword ? "text" : "password"}
+                              id="form3Example4c"
+                              className="form-control"
+                              onChange={(e) => setPassword(e.target.value)}
+                              onBlur={(e) => {
+                                let regex =
+                                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                                if (regex.test(password)) {
+                                  setErrors({ ...errors, password: false });
+                                } else {
+                                  setErrors({ ...errors, password: true });
+                                }
+                              }}
+                            />
+                            <button
+                              className={
+                                showPassword
+                                  ? "fa fa-eye-slash"
+                                  : "fa fa-eye password-icon"
                               }
-                            }}
-                          />
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setShowPassword(!showPassword);
+                              }}
+                            ></button>
+                          </div>
                           {errors.password && (
                             <div className="text-warning">
                               recuerda que debe tener al menos 8 caracteres 1
@@ -107,7 +137,10 @@ export const SignUp = () => {
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
-                          <label className="form-label" for="form3Example4cd">
+                          <label
+                            className="form-label"
+                            htmlFor="form3Example4cd"
+                          >
                             Repeat your password
                           </label>
                           <input
@@ -139,7 +172,10 @@ export const SignUp = () => {
                           id="form2Example3c"
                           onChange={(e) => setCheck(!check)}
                         />
-                        <label className="form-check-label" for="form2Example3">
+                        <label
+                          className="form-check-label"
+                          htmlFor="form2Example3"
+                        >
                           I agree all statements in{" "}
                           <a href="#!">Terms of service</a>
                         </label>
@@ -149,6 +185,17 @@ export const SignUp = () => {
                         <button
                           type="button"
                           className="btn btn-primary btn-lg"
+                          onClick={handleSubmit}
+                          disabled={
+                            errors.email ||
+                            errors.password ||
+                            errors.repeat ||
+                            !check ||
+                            !name.length > 0 ||
+                            !email.length > 0 ||
+                            !password.length > 0 ||
+                            !repeat.length > 0
+                          }
                         >
                           Register
                         </button>
