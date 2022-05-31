@@ -46,15 +46,29 @@ export const SignUp = () => {
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
+                          <label className="form-label" for="form3Example3c">
+                            Your Email
+                          </label>
                           <input
                             type="email"
                             id="form3Example3c"
                             className="form-control"
                             onChange={(e) => setEmail(e.target.value)}
+                            onBlur={(e) => {
+                              let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                              console.log(regex.test(email));
+                              if (regex.test(email)) {
+                                setErrors({ ...errors, email: false });
+                              } else {
+                                setErrors({ ...errors, email: true });
+                              }
+                            }}
                           />
-                          <label className="form-label" for="form3Example3c">
-                            Your Email
-                          </label>
+                          {errors.email && (
+                            <div className="text-warning">
+                              Correo invalido perro de awa
+                            </div>
+                          )}
                         </div>
                       </div>
 
