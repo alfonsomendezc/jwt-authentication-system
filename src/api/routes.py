@@ -44,3 +44,21 @@ def handle_register():
         }
         return jsonify(response_body), 400
 
+@api.route('/sign-in', methods=['POST'])
+def handle_login():
+
+    data = request.data
+    data_decode = json.loads(data)
+    user = User.query.filter_by(**data_decode).first()
+    if user is None:  
+        response_body = {
+            "message": "Credenciales Inválidas"
+        }
+        return jsonify(response_body), 400
+    else :
+        access_token = create_access_token(identity=user.email)
+        response_body = {
+            "message": "La logacion con exito",
+            "token":access_token
+        }
+        return jsonify(response_body), 200
