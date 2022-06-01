@@ -31,7 +31,7 @@ MIGRATE = Migrate(app, db, compare_type = True)
 db.init_app(app)
 
 # Allow CORS requests to this API
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*"}})
 
 # add the admin
 setup_admin(app)

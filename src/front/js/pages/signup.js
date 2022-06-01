@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const SignUp = () => {
-  // const { store, actions } = useContext(Context);
-
+  const { store, actions } = useContext(Context);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +20,16 @@ export const SignUp = () => {
   const history = useHistory();
 
   const handleSubmit = () => {
-    history.push("/private");
+    let data = {
+      name: name,
+      email: email,
+      password: password,
+    };
+    if (actions.registerUser(data)) {
+      history.push("/private");
+    } else {
+      alert("EL USUARIO YA ESTA CREADO INTENTE DE NUEVO");
+    }
   };
 
   return (
@@ -71,7 +80,7 @@ export const SignUp = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             onBlur={(e) => {
                               let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-                              console.log(regex.test(email));
+
                               if (regex.test(email)) {
                                 setErrors({ ...errors, email: false });
                               } else {

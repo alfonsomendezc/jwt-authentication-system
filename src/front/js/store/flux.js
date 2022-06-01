@@ -1,4 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
+  const API_URL = process.env.BACKEND_URL;
   return {
     store: {
       message: null,
@@ -21,8 +22,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().changeColor(0, "green");
       },
 
-      register: async (data) => {
-        let response = await fetch(`${process.env.BACKEND_URL}/sign-up`, {
+      registerUser: async (data) => {
+        let response = await fetch(`${API_URL}/api/sign-up`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
@@ -34,13 +35,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         } else return false;
       },
 
-      // getMessage: () => {
-      // 	// fetching data from the backend
-      // 	fetch(process.env.BACKEND_URL + "/api/hello")
-      // 		.then(resp => resp.json())
-      // 		.then(data => setStore({ message: data.message }))
-      // 		.catch(error => console.log("Error loading message from backend", error));
-      //},
+      getMessage: () => {
+        // fetching data from the backend
+        fetch(process.env.BACKEND_URL + "/api/hello")
+          .then((resp) => resp.json())
+          .then((data) => setStore({ message: data.message }))
+          .catch((error) =>
+            console.log("Error loading message from backend", error)
+          );
+      },
       changeColor: (index, color) => {
         //get the store
         const store = getStore();
