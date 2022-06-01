@@ -37,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getMessage: () => {
         // fetching data from the backend
-        fetch(process.env.BACKEND_URL + "/api/hello")
+        fetch(process.env.BACKEND_URL + "/api/hello", { mode: "no-cors" })
           .then((resp) => resp.json())
           .then((data) => setStore({ message: data.message }))
           .catch((error) =>

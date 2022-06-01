@@ -6,6 +6,7 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 import json
 from flask_cors import CORS, cross_origin
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 
 api = Blueprint('api', __name__)
 CORS(api)
@@ -31,9 +32,10 @@ def handle_register():
     if user is None:
         db.session.add(newUser)
         db.session.commit()
+        access_token = create_access_token(identity=newUser.email)
         response_body = {
             "message": "Usuario creado con exito",
-            "token":"token"
+            "token":access_token
         }
         return jsonify(response_body), 200
     else :
