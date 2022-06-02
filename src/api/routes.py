@@ -56,7 +56,7 @@ def handle_login():
         }
         return jsonify(response_body), 400
     else :
-        access_token = create_access_token(identity=user.email)
+        access_token = create_access_token(identity=user.id)
         response_body = {
             "message": "La logacion con exito",
             "token":access_token
