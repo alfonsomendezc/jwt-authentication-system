@@ -29,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           body: JSON.stringify(data),
         });
         if (response.ok) {
-          let data = response.json();
+          let data = await response.json();
           localStorage.setItem("token", data.token);
           return true;
         } else return false;
@@ -42,7 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           body: JSON.stringify(data),
         });
         if (response.ok) {
-          let data = response.json();
+          let data = await response.json();
           localStorage.setItem("token", data.token);
           return true;
         } else return false;
@@ -50,7 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getMessage: () => {
         // fetching data from the backend
-        fetch(`${process.env.BACKEND_URL}api/hello`)
+        fetch(`${process.env.BACKEND_URL}/api/hello`)
           .then((resp) => resp.json())
           .then((data) => setStore({ message: data.message }))
           .catch((error) =>
