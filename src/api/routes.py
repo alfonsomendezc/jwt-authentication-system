@@ -32,7 +32,7 @@ def handle_register():
     if user is None:
         db.session.add(newUser)
         db.session.commit()
-        access_token = create_access_token(identity=newUser.email)
+        access_token = create_access_token(identity=newUser.id)
         response_body = {
             "message": "Usuario creado con exito",
             "token":access_token
@@ -62,3 +62,9 @@ def handle_login():
             "token":access_token
         }
         return jsonify(response_body), 200
+
+@api.route("/private",methods=["POST"])
+@jwt_required()
+def handle_private():
+    current_user = get_jwt_identity()
+    return jsonify(current_user), 200

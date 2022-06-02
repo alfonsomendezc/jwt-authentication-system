@@ -50,6 +50,18 @@ const getState = ({ getStore, getActions, setStore }) => {
         } else return false;
       },
 
+      privateData: async () => {
+        let response = await fetch(`${API_URL}/api/private`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        let data = await response.json();
+        console.log("Esta es mi data privada", data);
+      },
+
       getMessage: () => {
         // fetching data from the backend
         fetch(`${process.env.BACKEND_URL}/api/hello`)

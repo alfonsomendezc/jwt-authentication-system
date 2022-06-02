@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Private = (props) => {
+  const { actions } = useContext(Context);
+  useEffect(() => {
+    actions.privateData();
+  }, []);
+
   return (
     <div>
       <nav className="navbar navbar-light bg-light">
