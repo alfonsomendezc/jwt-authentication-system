@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 
@@ -19,13 +20,13 @@ export const SignUp = () => {
 
   const history = useHistory();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let data = {
       name: name,
       email: email,
       password: password,
     };
-    if (actions.registerUser(data)) {
+    if (await actions.registerUser(data)) {
       history.push("/private");
     } else {
       alert("EL USUARIO YA ESTA CREADO INTENTE DE NUEVO");
@@ -209,6 +210,9 @@ export const SignUp = () => {
                           Register
                         </button>
                       </div>
+                      <Link className="m-auto" to={"/login"}>
+                        Si ya tienes cuenta, inicia sesion
+                      </Link>
                     </form>
                   </div>
                   <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
@@ -224,6 +228,9 @@ export const SignUp = () => {
           </div>
         </div>
       </div>
+      {localStorage.getItem("token") != undefined && (
+        <Redirect to={"/private"}></Redirect>
+      )}
     </section>
   );
 };

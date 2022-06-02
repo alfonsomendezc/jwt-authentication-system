@@ -25,10 +25,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       registerUser: async (data) => {
         let response = await fetch(`${API_URL}/api/sign-up`, {
           method: "POST",
+          // mode: "no-cors",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
-        if (response.ok) {
+        console.log(response.status);
+        if (response.status == 200) {
           let data = await response.json();
           localStorage.setItem("token", data.token);
           return true;

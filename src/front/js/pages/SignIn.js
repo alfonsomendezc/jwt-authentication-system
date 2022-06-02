@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 
@@ -15,12 +16,12 @@ export const SignIn = () => {
 
   const history = useHistory();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let data = {
       email: email,
       password: password,
     };
-    if (actions.loginUser(data)) {
+    if (await actions.loginUser(data)) {
       history.push("/private");
     } else {
       alert("CREDENCIALES INVALIDAS");
@@ -37,7 +38,7 @@ export const SignIn = () => {
                 <div className="row justify-content-center">
                   <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                     <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-                      Sign up
+                      Sign in
                     </p>
 
                     <form className="mx-1 mx-md-4">
@@ -150,6 +151,9 @@ export const SignIn = () => {
           </div>
         </div>
       </div>
+      {localStorage.getItem("token") != undefined && (
+        <Redirect to={"/private"}></Redirect>
+      )}
     </section>
   );
 };
