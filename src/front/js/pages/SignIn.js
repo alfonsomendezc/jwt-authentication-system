@@ -24,12 +24,16 @@ export const SignIn = () => {
     if (await actions.loginUser(data)) {
       history.push("/private");
     } else {
-      alert("CREDENCIALES INVALIDAS");
+      alert("Invalid Credentials");
     }
   };
 
   return (
-    <section className="vh-100" style={{ backgroundColor: "#eee" }}>
+    <section className="vh-100" style={{
+      backgroundImage: `url(
+        https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp
+      )`
+    }}>
       <div className="container h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-lg-12 col-xl-11">
@@ -67,8 +71,8 @@ export const SignIn = () => {
                             }}
                           />
                           {errors.email && (
-                            <div className="text-warning">
-                              Correo invalido perro de awa
+                            <div className="text-secondary">
+                              Invalid E-Mail
                             </div>
                           )}
                         </div>
@@ -112,10 +116,8 @@ export const SignIn = () => {
                             ></button>
                           </div>
                           {errors.password && (
-                            <div className="text-warning">
-                              recuerda que debe tener al menos 8 caracteres 1
-                              letra minuscula 1 letra mayuscula 1 numero y un
-                              caracter especial perro
+                            <div className="text-secondary">
+                              Invalid Password
                             </div>
                           )}
                         </div>
